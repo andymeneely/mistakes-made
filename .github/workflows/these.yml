@@ -1,5 +1,5 @@
 
-name: T.H.E.S.E. MistakeBot (When Labelled)
+name: T.H.E.S.E. MistakeBot
 
 on:
   issues:
@@ -11,6 +11,10 @@ jobs:
     if: contains( github.event.issue.labels.*.name, 'to-err-is-human')
     runs-on: ubuntu-latest
     steps:
+      - run: |
+          echo A comment on PR $NUMBER
+        env:
+          NUMBER: ${{ github.event.issue.number }}
       - name: Query for other mistake issues
         uses: octokit/graphql-action@v2.x
         id: count-err-issues
@@ -40,16 +44,22 @@ jobs:
 
             This is issue ${{ github.event.issue.number }} right?
 
-            All VHP "err" issues:
+            All "err" issues:
 
-            ```
             ${{ steps.count-err-issues.outputs.data}}
-            ```
 
-            ${{ fromJSON(steps.count-err-issues.outputs.data).repository.issues.edges[0].node.title}}
+            # Slips
+
+            - [ ] AS1 **Typos & Misspellings**: Typos and misspellings may occur in code comments, or when typing the name of a variable, function, or class. AL1 Working With Outdated Source Code: Forgetting to git-pull (or equivalent in other version control systems), or using an outdated version of a library.
+
+            # Lapses
+            - [ ] AL1 **Working With Outdated Source Code**: Forgetting to git-pull (or equivalent in other version control systems), or using an outdated version of a library.
+            - [ ] AL2 Forgetting an Import Statement: Forgetting to import a necessary library, class, variable, or function, or
+            forgetting to include arguments in a function call.
 
 
-            - [ ] Check this box (nothing happens at the moment)
-            - [ ] Check this box (nothing happens at the moment)
+
+
+
 
 
