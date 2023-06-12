@@ -1,0 +1,34 @@
+
+name: T.H.E.S.E. MistakeBot (Apply Labels)
+
+on:
+  issue_comment:
+    types:
+      - edited
+
+jobs:
+  mistakebot_apply_label:
+    if: contains( github.event.issue.labels.*.name, 'to-err-is-human')
+    runs-on: ubuntu-latest
+    steps:
+      # - name: add label
+      #   uses: actions-ecosystem/action-add-labels@v1
+        # if: ${{ startsWith(github.event.comment.body, '/add-labels') }}
+        # with:
+        #   labels: bug
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          comment_tag: mistakes
+          message: |
+            :microscope: Hello, there! I'm MistakeBot.
+
+            This is issue ${{ github.event.issue.number }} right?
+
+            The updated text is now this, right?
+
+            ```
+              ${{ github.event.comment.body }}
+            ```
+
+
