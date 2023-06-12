@@ -46,7 +46,7 @@ jobs:
             ${{ steps.count-err-issues.outputs.data}}
             ```
 
-            ${{ fromJSON(steps.count-err-issues.outputs.data).repository.issues}}
+            ${{ fromJSON(steps.count-err-issues.outputs.data).repository.issues.edges[0].node.title}}
 
 
             - [ ] Check this box (nothing happens at the moment)
