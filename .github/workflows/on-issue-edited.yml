@@ -11,24 +11,24 @@ jobs:
     if: contains( github.event.issue.labels.*.name, 'to-err-is-human')
     runs-on: ubuntu-latest
     steps:
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: regex-match
+        with:
+          text: ${{ github.event.comment.body }}
+          regex: \- \[x\] (A[SL]\d+)
+          flags: gm
       # - name: add label
       #   uses: actions-ecosystem/action-add-labels@v1
-        # if: ${{ startsWith(github.event.comment.body, '/add-labels') }}
-        # with:
-        #   labels: bug
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v2
+      #   with:
+      #     labels: bug
+      - uses: actions-ecosystem/action-create-comment@v1
         with:
-          comment_tag: mistakes
-          message: |
-            :microscope: Hello, there! I'm MistakeBot.
+          github_token: ${{ secrets.github_token }}
+          body: |
+            TESTING REGEX: ${{ steps.regex-match.outputs.group1 }}
 
-            This is issue ${{ github.event.issue.number }} right?
 
-            The updated text is now this, right?
 
-            ```
-              ${{ github.event.comment.body }}
-            ```
+
 
 
