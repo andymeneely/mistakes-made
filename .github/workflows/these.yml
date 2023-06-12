@@ -41,7 +41,7 @@ jobs:
       - name: Run Squib
       # docker run --rm -v "%cd%":/usr/src/app andymeneely/squib ruby hello.rb
         run: |
-          ruby hello.rb
+          ruby -e "require 'squib';puts 'hi from squib!'"
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
         with:
