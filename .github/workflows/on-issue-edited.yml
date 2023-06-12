@@ -11,6 +11,7 @@ jobs:
     if: contains( github.event.issue.labels.*.name, 'to-err-is-human')
     runs-on: ubuntu-latest
     steps:
+
       - uses: actions-ecosystem/action-regex-match@v2
         id: regex-match-al1
         with:
@@ -23,6 +24,35 @@ jobs:
         if: ${{ steps.regex-match-al1.outputs.group1 == 'AL1' }}
         with:
           labels: Outdated Source Code (human error AL1)
+
+
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: regex-match-as1
+        with:
+          text: ${{ github.event.comment.body }}
+          # \- \[x\] (A[SL]\d+)
+          regex: \- \[x\] (AS1)
+          flags: gm
+      - name: add AS1 label
+        uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ steps.regex-match-as1.outputs.group1 == 'AS1' }}
+        with:
+          labels: Typos and Misspellings (human error AS1)
+
+
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: regex-match-al2
+        with:
+          text: ${{ github.event.comment.body }}
+          # \- \[x\] (A[SL]\d+)
+          regex: \- \[x\] (AL2)
+          flags: gm
+      - name: add AL2 label
+        uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ steps.regex-match-as1.outputs.group1 == 'AL2' }}
+        with:
+          labels: Forgetting an Import (human error AL2)
+
       - uses: actions-ecosystem/action-create-comment@v1
         with:
           github_token: ${{ secrets.github_token }}
