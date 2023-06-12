@@ -42,7 +42,12 @@ jobs:
 
             All VHP "err" issues:
 
+            ```
             ${{ steps.count-err-issues.outputs.data}}
+            ```
+
+            ${{ fromJSON(steps.count-err-issues.outputs.data).repository.issues}}
+
 
             - [ ] Check this box (nothing happens at the moment)
             - [ ] Check this box (nothing happens at the moment)
